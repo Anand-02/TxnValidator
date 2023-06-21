@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"strconv"
 )
 
 func SetKeys() {
@@ -19,10 +18,5 @@ func SetKeys() {
 		ChkErr(e)
 		Put(key, strData)
 	}
-	id := "SIM" + strconv.Itoa(100)
-	key := []byte(id)
-	data := Get(key)
-	var tmp details
-	json.Unmarshal(data, &tmp)
-	fmt.Println(tmp)
+	chkValue(100)
 }
