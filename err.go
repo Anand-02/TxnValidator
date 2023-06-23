@@ -1,10 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+)
 
 func Err(err error) {
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 }
 

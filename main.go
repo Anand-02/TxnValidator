@@ -6,6 +6,7 @@ import (
 	"fmt"
 )
 
+// var db = openDB()
 func (t *details) DeriveHash() [32]uint8 {
 	info, _ := json.Marshal(t)
 	hash := sha256.Sum256([]byte(info))
@@ -14,6 +15,7 @@ func (t *details) DeriveHash() [32]uint8 {
 }
 
 func main() {
-	// SetKeys()
+	// defer openDB().Close()
+	SetKeys()
 	createRoute()
 }

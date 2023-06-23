@@ -10,7 +10,7 @@ func Validator(inputTxn map[string]Data) {
 	for id, value := range inputTxn {
 		newTxn.Id = id
 		newTxn.Data = value
-		key, _ := json.Marshal(id)
+		key := []byte(id)
 		data := Get(key)
 		var tmp details
 		json.Unmarshal(data, &tmp)
@@ -24,9 +24,8 @@ func Validator(inputTxn map[string]Data) {
 		strData, e := json.Marshal(tmp)
 		ChkErr(e)
 		Put(key, strData)
-		chkValue(1)
-		chkValue(2)
-		chkValue(3)
+		// temp := Get(key)
+		// fmt.Println(string(temp))
 	}
 	fmt.Println(newTxn)
 }
