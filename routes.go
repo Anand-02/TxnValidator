@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -18,7 +17,7 @@ func Handler(c *gin.Context) {
 	for _, mp2 := range txn {
 		Validator(mp2)
 	}
-	fmt.Println(txn)
+	// fmt.Println(txn)
 }
 
 func createRoute() {
