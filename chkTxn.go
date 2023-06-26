@@ -2,10 +2,15 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
+	//"fmt"
+	"sync"
 )
 
+var NewTxnMutex = &sync.Mutex{}
+
+
 func Validator(inputTxn map[string]Data) {
+	TxnNo++
 	newTxn := Txn{}
 	for id, value := range inputTxn {
 		newTxn.Id = id
@@ -21,11 +26,16 @@ func Validator(inputTxn map[string]Data) {
 			tmp.Version += 1.0
 			tmp.Value = value.Value
 		}
+		newTxn.Data.TxnID = TxnNo
+		//NewTxnMutex.Lock()
+		go newTxn.DeriveHash(tmp)
+		//NewTxnMutex.Unlock()
+		//fmt.Println(newTxn)
 		strData, e := json.Marshal(tmp)
 		ChkErr(e)
 		Put(key, strData)
 		// temp := Get(key)
 		// fmt.Println(string(temp))
 	}
-	fmt.Println(newTxn)
+	
 }
