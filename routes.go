@@ -20,8 +20,3 @@ func Handler(c *gin.Context) {
 	// fmt.Println(txn)
 }
 
-func createRoute() {
-	router.POST("/post", Handler)
-	err := router.Run("localhost:8000")
-	Err(err)
-}
