@@ -4,7 +4,7 @@ import "time"
 
 type Block struct {
 	BlockNo       int
-	PrevBlockHash [32]byte
+	PrevBlockHash string
 	Txns          []Txn
 	TimeStamp     time.Time
 	CommitStatus  bool
@@ -16,11 +16,11 @@ type Txn struct {
 }
 
 type Data struct {
+	TxnID   int
 	Value   int     `json:"val"`
 	Version float32 `json:"ver"`
 	Valid   bool
-	Hash    [32]byte
-	TxnID   int
+	Hash    string
 }
 
 type details struct {
