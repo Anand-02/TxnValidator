@@ -10,39 +10,33 @@ var BlockCapacity = 3
 var TxnNo = 0
 var LastHash string
 var ch = make(chan Txn, 10)
+var tmpch = make(chan Txn)
 var block = Block{
 	BlockNo:       0,
 	PrevBlockHash: LastHash,
 }
 
-// var db = openDB()
 func (newTxn Txn) DeriveHash(t details) {
 	info, err := json.Marshal(t)
 	if err != nil {
 		fmt.Println(err, t)
 	}
-	//fmt.Println(info)
 	hash := sha256.Sum256((info))
 	bs := fmt.Sprintf("%x", hash)
-
 	newTxn.Data.Hash = bs
-	// fmt.Println(newTxn)
-	ch <- newTxn
+	tmpch <- newTxn
 }
 
 func (b Block) DeriveHash() {
 	info, _ := json.Marshal(b)
 	hash := sha256.Sum256([]byte(info))
 	bs := fmt.Sprintf("%x", hash)
-	// fmt.Printf("%T", hash)
 	LastHash = bs
-	fmt.Println(LastHash)
 }
 
 func main() {
-	// defer openDB().Close()
 	SetKeys()
-	go InitChain()
+	InitChain()
 	router.POST("/post", Handler)
 	router.GET("/blocks", GetAllBlocks)
 	router.GET("/blocks/:blockNumber", GetBlock)

@@ -29,7 +29,6 @@ func Get(key []byte) []byte {
 	if getErr != nil {
 		fmt.Println(getErr.Error() + string(key))
 	}
-
 	return output
 }
 
