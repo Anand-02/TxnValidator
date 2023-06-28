@@ -44,6 +44,10 @@ func main() {
 	SetKeys()
 	go InitChain()
 	router.POST("/post", Handler)
+	router.GET("/blocks", GetAllBlocks)
+	router.GET("/blocks/:blockNumber", GetBlock)
 	err := router.Run("localhost:8000")
-	Err(err)
+	if err != nil {
+		fmt.Println(err)
+	}
 }

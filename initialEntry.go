@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"strconv"
 )
 
@@ -14,9 +15,11 @@ func SetKeys() {
 			Value:   i,
 			Version: 1.0,
 		}
-		strData, e := json.Marshal(tmp)
+		strData, err := json.Marshal(tmp)
 		key := []byte(id)
-		ChkErr(e)
+		if err != nil {
+			fmt.Println(err)
+		}
 		Put(key, strData)
 		// temp := Get(key)
 		// fmt.Println(string(temp))
