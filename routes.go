@@ -22,7 +22,6 @@ func Handler(c *gin.Context) {
 	for _, mp2 := range txn {
 		Validator(mp2)
 	}
-	// fmt.Println(txn)
 }
 
 func GetAllBlocks(c *gin.Context) {
