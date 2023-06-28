@@ -2,12 +2,8 @@ package main
 
 import (
 	"encoding/json"
-	//"fmt"
-	"sync"
+	"fmt"
 )
-
-var NewTxnMutex = &sync.Mutex{}
-
 
 func Validator(inputTxn map[string]Data) {
 	TxnNo++
@@ -27,15 +23,11 @@ func Validator(inputTxn map[string]Data) {
 			tmp.Value = value.Value
 		}
 		newTxn.Data.TxnID = TxnNo
-		//NewTxnMutex.Lock()
 		go newTxn.DeriveHash(tmp)
-		//NewTxnMutex.Unlock()
-		//fmt.Println(newTxn)
-		strData, e := json.Marshal(tmp)
-		ChkErr(e)
+		strData, err := json.Marshal(tmp)
+		if err != nil {
+			fmt.Println(err)
+		}
 		Put(key, strData)
-		// temp := Get(key)
-		// fmt.Println(string(temp))
 	}
-	
 }

@@ -7,8 +7,6 @@ import (
 	"time"
 )
 
-var file, _ = os.OpenFile("ledger.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0644)
-
 func UpdateBlock() {
 	block.DeriveHash()
 	block.BlockNo++
@@ -24,8 +22,12 @@ func UpdateBlock() {
 		if err != nil {
 			fmt.Println("error while writing block")
 		} else {
+			var file, _ = os.OpenFile("ledger.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0644)
 			_, err := file.WriteString(string(content) + "\n")
-			ChkErr(err)
+			file.Close()
+			if(err!=nil){
+				fmt.Println(err)
+			}
 		}
 		UpdateBlock()
 	}
@@ -36,11 +38,15 @@ func InitChain() {
 	block.TimeStamp = time.Now()
 	block.CommitStatus = true
 	content, err := json.Marshal(block)
-	ChkErr(err)
+	if(err!=nil){
+		fmt.Println(err)
+	}
+	var file, _ = os.OpenFile("ledger.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0644)
 	_, err = file.WriteString(string(content) + "\n")
 	if err != nil {
 		fmt.Println("error writing to file")
 	}
 	fmt.Println("File Created Successfully")
+	file.Close()
 	UpdateBlock()
 }
